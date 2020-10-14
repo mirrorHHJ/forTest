@@ -44,7 +44,10 @@
       }
     },
     methods: {
-      showDetail() {
+      showDetail(event) {
+        if (!event._constructed) {
+          return;
+        }
         this.headerDetailComp = this.headerDetailComp || this.$createHeaderDetail({
           $props: {
             seller: 'seller'

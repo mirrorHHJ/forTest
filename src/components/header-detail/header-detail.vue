@@ -13,7 +13,7 @@
             <div class="line"></div>
           </div>
           <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-bind:key="item" v-for="(item,index) in seller.supports">
+            <li class="support-item" v-bind:key="index" v-for="(item,index) in seller.supports">
               <span class="icon" :class="classMap[seller.supports[index].type]"></span>
               <span class="text">{{seller.supports[index].description}}</span>
             </li>
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="detail-close" @click="hideDetail">
+      <div class="detail-close" @click="hide">
         <i class="icon-close"></i>
       </div>
     </div>
@@ -60,6 +60,9 @@
       hide() {
         this.visible = false
       }
+    },
+    created() {
+      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
     components: {
       star
