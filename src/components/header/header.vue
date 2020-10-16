@@ -1,5 +1,5 @@
 <template>
-  <div class="header" @click="showDetail">
+  <div class="header" ref="showDetail" @click.stop.prevent="showDetail">
     <div class="content-wrapper">
       <div class="avatar">
         <img width="64" height="64" :src="seller.avatar">
@@ -17,12 +17,12 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count" @click="showDetail">
+      <div v-if="seller.supports" class="support-count">
         <span class="count">{{seller.supports.length}}个</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper" @click="showDetail">
+    <div class="bulletin-wrapper">
       <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
     </div>
@@ -33,6 +33,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import BScroll from 'better-scroll';
 
   export default {
     props: {
@@ -44,10 +45,7 @@
       }
     },
     methods: {
-      showDetail(event) {
-        if (!event._constructed) {
-          return;
-        }
+      showDetail() {
         this.headerDetailComp = this.headerDetailComp || this.$createHeaderDetail({
           $props: {
             seller: 'seller'
