@@ -1,25 +1,27 @@
 <template>
   <div>
     <v-header :seller="seller"></v-header>
-    <div class="tab border-1px">
-      <div class="tab-item">
-        <router-link to="/goods">商品</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/ratings">评论</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/seller">商家</router-link>
-      </div>
-    </div>
-    <keep-alive>
-      <router-view :seller="seller"></router-view>
-    </keep-alive>
+    <v-tab></v-tab>
+<!--    <div class="tab border-1px">-->
+<!--      <div class="tab-item">-->
+<!--        <router-link to="/goods">商品</router-link>-->
+<!--      </div>-->
+<!--      <div class="tab-item">-->
+<!--        <router-link to="/ratings">评论</router-link>-->
+<!--      </div>-->
+<!--      <div class="tab-item">-->
+<!--        <router-link to="/seller">商家</router-link>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <keep-alive>-->
+<!--      <router-view :seller="seller"></router-view>-->
+<!--    </keep-alive>-->
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import header from 'components/header/header.vue'
+  import Tab from 'components/tab/tab.vue'
   import { getSeller } from 'api'
 
   export default {
@@ -39,7 +41,8 @@
       }
     },
     components: {
-      'v-header': header
+      'v-header': header,
+      'v-tab':Tab
     }
   }
 </script>
