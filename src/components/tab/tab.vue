@@ -33,7 +33,7 @@
       tabs: {
         type: Array,
         default() {
-          return {}
+          return []
         }
       },
       initialIndex: {
