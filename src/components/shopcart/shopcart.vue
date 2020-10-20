@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="ball-container">
-        <div v-for="ball in balls">
+        <div v-for="(ball,index) in balls" v-bind:key="index">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
             <div class="ball" v-show="ball.show">
               <div class="inner inner-hook"></div>
@@ -35,7 +35,7 @@
           </div>
           <div class="list-content" ref="listContent">
             <ul>
-              <li class="food" v-for="food in selectFoods">
+              <li class="food" v-for="(food,index) in selectFoods" v-bind:key="index">
                 <span class="name">{{food.name}}</span>
                 <div class="price">
                   <span>￥{{food.price*food.count}}</span>
@@ -136,24 +136,29 @@
           return 'enough';
         }
       },
-      listShow() {
-        if (!this.totalCount) {
-          this.fold = true;
-          return false;
+      listShow: {
+        get() {
+          if (!this.totalCount) {
+            return false;
+          }
+          return this.fold;
+        },
+        set() {
+          if (!this.totalCount) {
+            this.fold = false;
+          }
+          if (!this.fold) {
+            this.$nextTick(() => {
+              if (!this.scroll) {
+                this.scroll = new BScroll(this.$refs.listContent, {
+                  click: true
+                });
+              } else {
+                this.scroll.refresh();
+              }
+            });
+          }
         }
-        let show = !this.fold;
-        if (show) {
-          this.$nextTick(() => {
-            if (!this.scroll) {
-              this.scroll = new BScroll(this.$refs.listContent, {
-                click: true
-              });
-            } else {
-              this.scroll.refresh();
-            }
-          });
-        }
-        return show;
       }
     },
     methods: {
@@ -244,13 +249,16 @@
     z-index: 50
     width: 100%
     height: 48px
+
     .content
       display: flex
       background: #141d27
       font-size: 0
       color: rgba(255, 255, 255, 0.4)
+
       .content-left
         flex: 1
+
         .logo-wrapper
           display: inline-block
           vertical-align: top
@@ -263,20 +271,25 @@
           box-sizing: border-box
           border-radius: 50%
           background: #141d27
+
           .logo
             width: 100%
             height: 100%
             border-radius: 50%
             text-align: center
             background: #2b343c
+
             &.highlight
               background: rgb(0, 160, 220)
+
             .icon-shopping_cart
               line-height: 44px
               font-size: 24px
               color: #80858a
+
               &.highlight
                 color: #fff
+
           .num
             position: absolute
             top: 0
@@ -291,6 +304,7 @@
             color: #fff
             background: rgb(240, 20, 20)
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4)
+
         .price
           display: inline-block
           vertical-align: top
@@ -301,28 +315,35 @@
           border-right: 1px solid rgba(255, 255, 255, 0.1)
           font-size: 16px
           font-weight: 700
+
           &.highlight
             color: #fff
+
         .desc
           display: inline-block
           vertical-align: top
           margin: 12px 0 0 12px
           line-height: 24px
           font-size: 10px
+
       .content-right
         flex: 0 0 105px
         width: 105px
+
         .pay
           height: 48px
           line-height: 48px
           text-align: center
           font-size: 12px
           font-weight: 700
+
           &.not-enough
             background: #2b333b
+
           &.enough
             background: #00b43c
             color: #fff
+
     .ball-container
       .ball
         position: fixed
@@ -330,12 +351,14 @@
         bottom: 22px
         z-index: 200
         transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
+
         .inner
           width: 16px
           height: 16px
           border-radius: 50%
           background: rgb(0, 160, 220)
           transition: all 0.4s linear
+
     .shopcart-list
       position: absolute
       left: 0
@@ -343,20 +366,25 @@
       z-index: -1
       width: 100%
       transform: translate3d(0, -100%, 0)
+
       &.fold-enter-active, &.fold-leave-active
         transition: all 0.5s
+
       &.fold-enter, &.fold-leave-active
         transform: translate3d(0, 0, 0)
+
       .list-header
         height: 40px
         line-height: 40px
         padding: 0 18px
         background: #f3f5f7
         border-bottom: 1px solid rgba(7, 17, 27, 0.1)
+
         .title
           float: left
           font-size: 14px
           color: rgb(7, 17, 27)
+
         .empty
           float: right
           font-size: 12px
@@ -367,15 +395,18 @@
         max-height: 217px
         overflow: hidden
         background: #fff
+
         .food
           position: relative
           padding: 12px 0
           box-sizing: border-box
           border-1px(rgba(7, 17, 27, 0.1))
+
           .name
             line-height: 24px
             font-size: 14px
             color: rgb(7, 17, 27)
+
           .price
             position: absolute
             right: 90px
@@ -384,6 +415,7 @@
             font-size: 14px
             font-weight: 700
             color: rgb(240, 20, 20)
+
           .cartcontrol-wrapper
             position: absolute
             right: 0
@@ -399,8 +431,10 @@
     backdrop-filter: blur(10px)
     opacity: 1
     background: rgba(7, 17, 27, 0.6)
+
     &.fade-enter-active, &.fade-leave-active
       transition: all 0.5s
+
     &.fade-enter, &.fade-leave-active
       opacity: 0
       background: rgba(7, 17, 27, 0)

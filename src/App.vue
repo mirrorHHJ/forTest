@@ -1,33 +1,49 @@
 <template>
   <div>
     <v-header :seller="seller"></v-header>
-    <v-tab></v-tab>
-<!--    <div class="tab border-1px">-->
-<!--      <div class="tab-item">-->
-<!--        <router-link to="/goods">商品</router-link>-->
-<!--      </div>-->
-<!--      <div class="tab-item">-->
-<!--        <router-link to="/ratings">评论</router-link>-->
-<!--      </div>-->
-<!--      <div class="tab-item">-->
-<!--        <router-link to="/seller">商家</router-link>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <keep-alive>-->
-<!--      <router-view :seller="seller"></router-view>-->
-<!--    </keep-alive>-->
+    <div class="tab-wrapper">
+      <v-tab :tabs="tabs" :initialIndex="0"></v-tab>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import header from 'components/header/header.vue'
-  import Tab from 'components/tab/tab.vue'
+  import Goods from 'components/goods/goods'
+  import Ratings from 'components/ratings/ratings'
+  import Seller from 'components/seller/seller'
+  import tab from 'components/tab/tab.vue'
   import { getSeller } from 'api'
 
   export default {
     data() {
       return {
         seller: {}
+      }
+    },
+    computed: {
+      tabs() {
+        return [
+          {
+            label: '商品',
+            component: Goods,
+            data: {
+              seller: this.seller
+            }
+          }, {
+            label: '评价',
+            component: Ratings,
+            data: {
+              seller: this.seller
+            }
+          }, {
+            label: '商家',
+            component: Seller,
+            data: {
+              seller: this.seller
+            }
+          }
+        ]
       }
     },
     created() {
@@ -42,13 +58,20 @@
     },
     components: {
       'v-header': header,
-      'v-tab':Tab
+      'v-tab': tab
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/stylus/mixin.styl"
+
+  .tab-wrapper
+    position: fixed
+    top: 136px
+    left: 0
+    bottom: 0
+    right: 0
 
   .tab
     display: flex

@@ -29,7 +29,7 @@
                     :ratings="ratings"></ratingselect>
       <div class="rating-wrapper">
         <ul>
-          <li v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)" class="rating-item">
+          <li v-for="(rating,index) in ratings" v-bind:key="index" v-show="needShow(rating.rateType, rating.text)" class="rating-item">
             <div class="avatar">
               <img width="28" height="28" :src="rating.avatar">
             </div>
@@ -42,7 +42,7 @@
               <p class="text">{{rating.text}}</p>
               <div class="recommend" v-show="rating.recommend && rating.recommend.length">
                 <span class="icon-thumb_up"></span>
-                <span class="item" v-for="item in rating.recommend">{{item}}</span>
+                <span class="item" v-for="(item,index) in rating.recommend" v-bind:key="index">{{item}}</span>
               </div>
               <div class="time">
                 {{rating.rateTime | formatDate}}
@@ -57,7 +57,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
-  import {formatDate} from 'common/js/date';
+  import { formatDate } from 'common/js/date';
   import star from 'components/star/star';
   import ratingselect from 'components/ratingselect/ratingselect';
   import split from 'components/split/split';

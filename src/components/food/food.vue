@@ -39,7 +39,7 @@
                         :ratings="food.ratings"></ratingselect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
-              <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings"
+              <li v-show="needShow(rating.rateType,rating.text)" v-for="(rating,index) in food.ratings"
                   v-bind:key="index" class="rating-item border-1px">
                 <div class="user">
                   <span class="name">{{rating.username}}</span>
@@ -62,7 +62,7 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll';
   import Vue from 'vue';
-  import {formatDate} from 'common/js/date';
+  import { formatDate } from 'common/js/date';
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import ratingselect from 'components/ratingselect/ratingselect';
   import split from 'components/split/split';
