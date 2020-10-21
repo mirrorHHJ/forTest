@@ -60,16 +60,12 @@
   import cartcontrol from 'components/cartcontrol/cartcontrol';
 
   export default {
+    name: 'shopcart',
     props: {
       selectFoods: {
         type: Array,
         default() {
-          return [
-            {
-              price: 10,
-              count: 1
-            }
-          ];
+          return []
         }
       },
       deliveryPrice: {
