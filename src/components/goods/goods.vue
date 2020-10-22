@@ -30,9 +30,11 @@
           </ul>
         </cube-scroll-nav-panel>
       </cube-scroll-nav>
-
-      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
-                :minPrice="seller.minPrice"></shopcart>
+      <div class="shop-cart-wrapper">
+        <shopcart
+          :delivery-price="seller.deliveryPrice"
+                  :min-price="seller.minPrice"></shopcart>
+      </div>
     </div>
   </div>
 </template>
